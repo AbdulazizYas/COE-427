@@ -7,6 +7,10 @@ from api.notifications import notifications
 from models import Base
 from database import engine
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 app = FastAPI(
     title="Linker", openapi_url="/openapi.json"
@@ -30,7 +34,7 @@ if __name__ == "__main__":
   Base.metadata.create_all(bind=engine)
   uvicorn.run(
     app="main:app",
-    reload=True if os.environ["ENV"] != "prod" else False,
-    host="localhost" if os.environ["ENV"] != "prod" else "0.0.0.0",
+    reload=True if os.getenv("ENV") != "prod" else False,
+    host="localhost" if os.getenv("ENV") != "prod" else "0.0.0.0",
     port=8000
   )
